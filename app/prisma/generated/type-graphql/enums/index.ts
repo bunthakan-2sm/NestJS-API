@@ -1,2 +1,2 @@
-export { MydbScalarFieldEnum } from "./MydbScalarFieldEnum";
-export { SortOrder } from "./SortOrder";
+export { MydbScalarFieldEnum } from './MydbScalarFieldEnum';
+export { SortOrder } from './SortOrder';

@@ -1,1 +1,1 @@
-export { MydbCrudResolver } from "./Mydb/MydbCrudResolver";
+export { MydbCrudResolver } from './Mydb/MydbCrudResolver';

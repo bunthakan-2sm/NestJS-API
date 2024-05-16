@@ -1,14 +1,14 @@
-import { ClassType } from "type-graphql";
-import * as tslib from "tslib";
-import * as crudResolvers from "./resolvers/crud/resolvers-crud.index";
-import * as argsTypes from "./resolvers/crud/args.index";
-import * as actionResolvers from "./resolvers/crud/resolvers-actions.index";
-import * as models from "./models";
-import * as outputTypes from "./resolvers/outputs";
-import * as inputTypes from "./resolvers/inputs";
+import { ClassType } from 'type-graphql';
+import * as tslib from 'tslib';
+import * as crudResolvers from './resolvers/crud/resolvers-crud.index';
+import * as argsTypes from './resolvers/crud/args.index';
+import * as actionResolvers from './resolvers/crud/resolvers-actions.index';
+import * as models from './models';
+import * as outputTypes from './resolvers/outputs';
+import * as inputTypes from './resolvers/inputs';
 
 const crudResolversMap = {
-  Mydb: crudResolvers.MydbCrudResolver
+  Mydb: crudResolvers.MydbCrudResolver,
 };
 const actionResolversMap = {
   Mydb: {
@@ -23,36 +23,48 @@ const actionResolversMap = {
     groupByMydb: actionResolvers.GroupByMydbResolver,
     updateManyMydb: actionResolvers.UpdateManyMydbResolver,
     updateOneMydb: actionResolvers.UpdateOneMydbResolver,
-    upsertOneMydb: actionResolvers.UpsertOneMydbResolver
-  }
+    upsertOneMydb: actionResolvers.UpsertOneMydbResolver,
+  },
 };
 const crudResolversInfo = {
-  Mydb: ["aggregateMydb", "createManyMydb", "createOneMydb", "deleteManyMydb", "deleteOneMydb", "findFirstMydb", "mydbs", "mydb", "groupByMydb", "updateManyMydb", "updateOneMydb", "upsertOneMydb"]
+  Mydb: [
+    'aggregateMydb',
+    'createManyMydb',
+    'createOneMydb',
+    'deleteManyMydb',
+    'deleteOneMydb',
+    'findFirstMydb',
+    'mydbs',
+    'mydb',
+    'groupByMydb',
+    'updateManyMydb',
+    'updateOneMydb',
+    'upsertOneMydb',
+  ],
 };
 const argsInfo = {
-  AggregateMydbArgs: ["where", "orderBy", "cursor", "take", "skip"],
-  CreateManyMydbArgs: ["data", "skipDuplicates"],
-  CreateOneMydbArgs: ["data"],
-  DeleteManyMydbArgs: ["where"],
-  DeleteOneMydbArgs: ["where"],
-  FindFirstMydbArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
-  FindManyMydbArgs: ["where", "orderBy", "cursor", "take", "skip", "distinct"],
-  FindUniqueMydbArgs: ["where"],
-  GroupByMydbArgs: ["where", "orderBy", "by", "having", "take", "skip"],
-  UpdateManyMydbArgs: ["data", "where"],
-  UpdateOneMydbArgs: ["data", "where"],
-  UpsertOneMydbArgs: ["where", "create", "update"]
+  AggregateMydbArgs: ['where', 'orderBy', 'cursor', 'take', 'skip'],
+  CreateManyMydbArgs: ['data', 'skipDuplicates'],
+  CreateOneMydbArgs: ['data'],
+  DeleteManyMydbArgs: ['where'],
+  DeleteOneMydbArgs: ['where'],
+  FindFirstMydbArgs: ['where', 'orderBy', 'cursor', 'take', 'skip', 'distinct'],
+  FindManyMydbArgs: ['where', 'orderBy', 'cursor', 'take', 'skip', 'distinct'],
+  FindUniqueMydbArgs: ['where'],
+  GroupByMydbArgs: ['where', 'orderBy', 'by', 'having', 'take', 'skip'],
+  UpdateManyMydbArgs: ['data', 'where'],
+  UpdateOneMydbArgs: ['data', 'where'],
+  UpsertOneMydbArgs: ['where', 'create', 'update'],
 };
 
 type ResolverModelNames = keyof typeof crudResolversMap;
 
-type ModelResolverActionNames<
-  TModel extends ResolverModelNames
-  > = keyof typeof crudResolversMap[TModel]["prototype"];
+type ModelResolverActionNames<TModel extends ResolverModelNames> =
+  keyof (typeof crudResolversMap)[TModel]['prototype'];
 
-export type ResolverActionsConfig<
-  TModel extends ResolverModelNames
-  > = Partial<Record<ModelResolverActionNames<TModel> | "_all", MethodDecorator[]>>;
+export type ResolverActionsConfig<TModel extends ResolverModelNames> = Partial<
+  Record<ModelResolverActionNames<TModel> | '_all', MethodDecorator[]>
+>;
 
 export type ResolversEnhanceMap = {
   [TModel in ResolverModelNames]?: ResolverActionsConfig<TModel>;
@@ -62,31 +74,47 @@ export function applyResolversEnhanceMap(
   resolversEnhanceMap: ResolversEnhanceMap,
 ) {
   for (const resolversEnhanceMapKey of Object.keys(resolversEnhanceMap)) {
-    const modelName = resolversEnhanceMapKey as keyof typeof resolversEnhanceMap;
+    const modelName =
+      resolversEnhanceMapKey as keyof typeof resolversEnhanceMap;
     const crudTarget = crudResolversMap[modelName].prototype;
     const resolverActionsConfig = resolversEnhanceMap[modelName]!;
     const actionResolversConfig = actionResolversMap[modelName];
     if (resolverActionsConfig._all) {
       const allActionsDecorators = resolverActionsConfig._all;
-      const resolverActionNames = crudResolversInfo[modelName as keyof typeof crudResolversInfo];
+      const resolverActionNames =
+        crudResolversInfo[modelName as keyof typeof crudResolversInfo];
       for (const resolverActionName of resolverActionNames) {
-        const actionTarget = (actionResolversConfig[
-          resolverActionName as keyof typeof actionResolversConfig
-        ] as Function).prototype;
-        tslib.__decorate(allActionsDecorators, crudTarget, resolverActionName, null);
-        tslib.__decorate(allActionsDecorators, actionTarget, resolverActionName, null);
+        const actionTarget = (
+          actionResolversConfig[
+            resolverActionName as keyof typeof actionResolversConfig
+          ] as Function
+        ).prototype;
+        tslib.__decorate(
+          allActionsDecorators,
+          crudTarget,
+          resolverActionName,
+          null,
+        );
+        tslib.__decorate(
+          allActionsDecorators,
+          actionTarget,
+          resolverActionName,
+          null,
+        );
       }
     }
     const resolverActionsToApply = Object.keys(resolverActionsConfig).filter(
-      it => it !== "_all"
+      (it) => it !== '_all',
     );
     for (const resolverActionName of resolverActionsToApply) {
       const decorators = resolverActionsConfig[
         resolverActionName as keyof typeof resolverActionsConfig
       ] as MethodDecorator[];
-      const actionTarget = (actionResolversConfig[
-        resolverActionName as keyof typeof actionResolversConfig
-      ] as Function).prototype;
+      const actionTarget = (
+        actionResolversConfig[
+          resolverActionName as keyof typeof actionResolversConfig
+        ] as Function
+      ).prototype;
       tslib.__decorate(decorators, crudTarget, resolverActionName, null);
       tslib.__decorate(decorators, actionTarget, resolverActionName, null);
     }
@@ -96,13 +124,13 @@ export function applyResolversEnhanceMap(
 type ArgsTypesNames = keyof typeof argsTypes;
 
 type ArgFieldNames<TArgsType extends ArgsTypesNames> = Exclude<
-  keyof typeof argsTypes[TArgsType]["prototype"],
+  keyof (typeof argsTypes)[TArgsType]['prototype'],
   number | symbol
 >;
 
-type ArgFieldsConfig<
-  TArgsType extends ArgsTypesNames
-  > = FieldsConfig<ArgFieldNames<TArgsType>>;
+type ArgFieldsConfig<TArgsType extends ArgsTypesNames> = FieldsConfig<
+  ArgFieldNames<TArgsType>
+>;
 
 export type ArgConfig<TArgsType extends ArgsTypesNames> = {
   class?: ClassDecorator[];
@@ -117,7 +145,8 @@ export function applyArgsTypesEnhanceMap(
   argsTypesEnhanceMap: ArgsTypesEnhanceMap,
 ) {
   for (const argsTypesEnhanceMapKey of Object.keys(argsTypesEnhanceMap)) {
-    const argsTypeName = argsTypesEnhanceMapKey as keyof typeof argsTypesEnhanceMap;
+    const argsTypeName =
+      argsTypesEnhanceMapKey as keyof typeof argsTypesEnhanceMap;
     const typeConfig = argsTypesEnhanceMap[argsTypeName]!;
     const typeClass = argsTypes[argsTypeName];
     const typeTarget = typeClass.prototype;
@@ -136,17 +165,17 @@ type TypeConfig = {
 };
 
 type FieldsConfig<TTypeKeys extends string = string> = Partial<
-  Record<TTypeKeys | "_all", PropertyDecorator[]>
+  Record<TTypeKeys | '_all', PropertyDecorator[]>
 >;
 
 function applyTypeClassEnhanceConfig<
   TEnhanceConfig extends TypeConfig,
-  TType extends object
+  TType extends object,
 >(
   enhanceConfig: TEnhanceConfig,
   typeClass: ClassType<TType>,
   typePrototype: TType,
-  typeFieldNames: string[]
+  typeFieldNames: string[],
 ) {
   if (enhanceConfig.class) {
     tslib.__decorate(enhanceConfig.class, typeClass);
@@ -155,11 +184,16 @@ function applyTypeClassEnhanceConfig<
     if (enhanceConfig.fields._all) {
       const allFieldsDecorators = enhanceConfig.fields._all;
       for (const typeFieldName of typeFieldNames) {
-        tslib.__decorate(allFieldsDecorators, typePrototype, typeFieldName, void 0);
+        tslib.__decorate(
+          allFieldsDecorators,
+          typePrototype,
+          typeFieldName,
+          void 0,
+        );
       }
     }
     const configFieldsToApply = Object.keys(enhanceConfig.fields).filter(
-      it => it !== "_all"
+      (it) => it !== '_all',
     );
     for (const typeFieldName of configFieldsToApply) {
       const fieldDecorators = enhanceConfig.fields[typeFieldName]!;
@@ -169,13 +203,13 @@ function applyTypeClassEnhanceConfig<
 }
 
 const modelsInfo = {
-  Mydb: ["id", "firstname", "lastname"]
+  Mydb: ['id', 'firstname', 'lastname'],
 };
 
 type ModelNames = keyof typeof models;
 
 type ModelFieldNames<TModel extends ModelNames> = Exclude<
-  keyof typeof models[TModel]["prototype"],
+  keyof (typeof models)[TModel]['prototype'],
   number | symbol
 >;
 
@@ -208,24 +242,24 @@ export function applyModelsEnhanceMap(modelsEnhanceMap: ModelsEnhanceMap) {
 }
 
 const outputsInfo = {
-  AggregateMydb: ["_count", "_min", "_max"],
-  MydbGroupBy: ["id", "firstname", "lastname", "_count", "_min", "_max"],
-  AffectedRowsOutput: ["count"],
-  MydbCountAggregate: ["id", "firstname", "lastname", "_all"],
-  MydbMinAggregate: ["id", "firstname", "lastname"],
-  MydbMaxAggregate: ["id", "firstname", "lastname"]
+  AggregateMydb: ['_count', '_min', '_max'],
+  MydbGroupBy: ['id', 'firstname', 'lastname', '_count', '_min', '_max'],
+  AffectedRowsOutput: ['count'],
+  MydbCountAggregate: ['id', 'firstname', 'lastname', '_all'],
+  MydbMinAggregate: ['id', 'firstname', 'lastname'],
+  MydbMaxAggregate: ['id', 'firstname', 'lastname'],
 };
 
 type OutputTypesNames = keyof typeof outputTypes;
 
 type OutputTypeFieldNames<TOutput extends OutputTypesNames> = Exclude<
-  keyof typeof outputTypes[TOutput]["prototype"],
+  keyof (typeof outputTypes)[TOutput]['prototype'],
   number | symbol
 >;
 
-type OutputTypeFieldsConfig<
-  TOutput extends OutputTypesNames
-  > = FieldsConfig<OutputTypeFieldNames<TOutput>>;
+type OutputTypeFieldsConfig<TOutput extends OutputTypesNames> = FieldsConfig<
+  OutputTypeFieldNames<TOutput>
+>;
 
 export type OutputTypeConfig<TOutput extends OutputTypesNames> = {
   class?: ClassDecorator[];
@@ -240,7 +274,8 @@ export function applyOutputTypesEnhanceMap(
   outputTypesEnhanceMap: OutputTypesEnhanceMap,
 ) {
   for (const outputTypeEnhanceMapKey of Object.keys(outputTypesEnhanceMap)) {
-    const outputTypeName = outputTypeEnhanceMapKey as keyof typeof outputTypesEnhanceMap;
+    const outputTypeName =
+      outputTypeEnhanceMapKey as keyof typeof outputTypesEnhanceMap;
     const typeConfig = outputTypesEnhanceMap[outputTypeName]!;
     const typeClass = outputTypes[outputTypeName];
     const typeTarget = typeClass.prototype;
@@ -254,42 +289,173 @@ export function applyOutputTypesEnhanceMap(
 }
 
 const inputsInfo = {
-  MydbWhereInput: ["AND", "OR", "NOT", "id", "firstname", "lastname"],
-  MydbOrderByWithRelationInput: ["id", "firstname", "lastname"],
-  MydbWhereUniqueInput: ["id"],
-  MydbOrderByWithAggregationInput: ["id", "firstname", "lastname", "_count", "_max", "_min"],
-  MydbScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "firstname", "lastname"],
-  MydbCreateInput: ["id", "firstname", "lastname"],
-  MydbUpdateInput: ["id", "firstname", "lastname"],
-  MydbCreateManyInput: ["id", "firstname", "lastname"],
-  MydbUpdateManyMutationInput: ["id", "firstname", "lastname"],
-  StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
-  StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
-  MydbCountOrderByAggregateInput: ["id", "firstname", "lastname"],
-  MydbMaxOrderByAggregateInput: ["id", "firstname", "lastname"],
-  MydbMinOrderByAggregateInput: ["id", "firstname", "lastname"],
-  StringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "_count", "_min", "_max"],
-  StringNullableWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "_count", "_min", "_max"],
-  StringFieldUpdateOperationsInput: ["set"],
-  NullableStringFieldUpdateOperationsInput: ["set"],
-  NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
-  NestedStringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
-  NestedStringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "_count", "_min", "_max"],
-  NestedIntFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"],
-  NestedStringNullableWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "_count", "_min", "_max"],
-  NestedIntNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "not"]
+  MydbWhereInput: ['AND', 'OR', 'NOT', 'id', 'firstname', 'lastname'],
+  MydbOrderByWithRelationInput: ['id', 'firstname', 'lastname'],
+  MydbWhereUniqueInput: ['id'],
+  MydbOrderByWithAggregationInput: [
+    'id',
+    'firstname',
+    'lastname',
+    '_count',
+    '_max',
+    '_min',
+  ],
+  MydbScalarWhereWithAggregatesInput: [
+    'AND',
+    'OR',
+    'NOT',
+    'id',
+    'firstname',
+    'lastname',
+  ],
+  MydbCreateInput: ['id', 'firstname', 'lastname'],
+  MydbUpdateInput: ['id', 'firstname', 'lastname'],
+  MydbCreateManyInput: ['id', 'firstname', 'lastname'],
+  MydbUpdateManyMutationInput: ['id', 'firstname', 'lastname'],
+  StringFilter: [
+    'equals',
+    'in',
+    'notIn',
+    'lt',
+    'lte',
+    'gt',
+    'gte',
+    'contains',
+    'startsWith',
+    'endsWith',
+    'not',
+  ],
+  StringNullableFilter: [
+    'equals',
+    'in',
+    'notIn',
+    'lt',
+    'lte',
+    'gt',
+    'gte',
+    'contains',
+    'startsWith',
+    'endsWith',
+    'not',
+  ],
+  MydbCountOrderByAggregateInput: ['id', 'firstname', 'lastname'],
+  MydbMaxOrderByAggregateInput: ['id', 'firstname', 'lastname'],
+  MydbMinOrderByAggregateInput: ['id', 'firstname', 'lastname'],
+  StringWithAggregatesFilter: [
+    'equals',
+    'in',
+    'notIn',
+    'lt',
+    'lte',
+    'gt',
+    'gte',
+    'contains',
+    'startsWith',
+    'endsWith',
+    'not',
+    '_count',
+    '_min',
+    '_max',
+  ],
+  StringNullableWithAggregatesFilter: [
+    'equals',
+    'in',
+    'notIn',
+    'lt',
+    'lte',
+    'gt',
+    'gte',
+    'contains',
+    'startsWith',
+    'endsWith',
+    'not',
+    '_count',
+    '_min',
+    '_max',
+  ],
+  StringFieldUpdateOperationsInput: ['set'],
+  NullableStringFieldUpdateOperationsInput: ['set'],
+  NestedStringFilter: [
+    'equals',
+    'in',
+    'notIn',
+    'lt',
+    'lte',
+    'gt',
+    'gte',
+    'contains',
+    'startsWith',
+    'endsWith',
+    'not',
+  ],
+  NestedStringNullableFilter: [
+    'equals',
+    'in',
+    'notIn',
+    'lt',
+    'lte',
+    'gt',
+    'gte',
+    'contains',
+    'startsWith',
+    'endsWith',
+    'not',
+  ],
+  NestedStringWithAggregatesFilter: [
+    'equals',
+    'in',
+    'notIn',
+    'lt',
+    'lte',
+    'gt',
+    'gte',
+    'contains',
+    'startsWith',
+    'endsWith',
+    'not',
+    '_count',
+    '_min',
+    '_max',
+  ],
+  NestedIntFilter: ['equals', 'in', 'notIn', 'lt', 'lte', 'gt', 'gte', 'not'],
+  NestedStringNullableWithAggregatesFilter: [
+    'equals',
+    'in',
+    'notIn',
+    'lt',
+    'lte',
+    'gt',
+    'gte',
+    'contains',
+    'startsWith',
+    'endsWith',
+    'not',
+    '_count',
+    '_min',
+    '_max',
+  ],
+  NestedIntNullableFilter: [
+    'equals',
+    'in',
+    'notIn',
+    'lt',
+    'lte',
+    'gt',
+    'gte',
+    'not',
+  ],
 };
 
 type InputTypesNames = keyof typeof inputTypes;
 
 type InputTypeFieldNames<TInput extends InputTypesNames> = Exclude<
-  keyof typeof inputTypes[TInput]["prototype"],
+  keyof (typeof inputTypes)[TInput]['prototype'],
   number | symbol
 >;
 
-type InputTypeFieldsConfig<
-  TInput extends InputTypesNames
-  > = FieldsConfig<InputTypeFieldNames<TInput>>;
+type InputTypeFieldsConfig<TInput extends InputTypesNames> = FieldsConfig<
+  InputTypeFieldNames<TInput>
+>;
 
 export type InputTypeConfig<TInput extends InputTypesNames> = {
   class?: ClassDecorator[];
@@ -304,7 +470,8 @@ export function applyInputTypesEnhanceMap(
   inputTypesEnhanceMap: InputTypesEnhanceMap,
 ) {
   for (const inputTypeEnhanceMapKey of Object.keys(inputTypesEnhanceMap)) {
-    const inputTypeName = inputTypeEnhanceMapKey as keyof typeof inputTypesEnhanceMap;
+    const inputTypeName =
+      inputTypeEnhanceMapKey as keyof typeof inputTypesEnhanceMap;
     const typeConfig = inputTypesEnhanceMap[inputTypeName]!;
     const typeClass = inputTypes[inputTypeName];
     const typeTarget = typeClass.prototype;
@@ -316,4 +483,3 @@ export function applyInputTypesEnhanceMap(
     );
   }
 }
-
