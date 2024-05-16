@@ -2,21 +2,39 @@ import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Author {
-  @Field((type) => Int)
+  @Field(() => Int)
   id: number;
 
   @Field({ nullable: true })
-  firstName?: string;
+  firstname?: string;
 
   @Field({ nullable: true })
-  lastName?: string;
+  lastname?: string;
 }
 
 @InputType()
 export class AuthorInput {
+  @Field({ nullable: false })
+  firstname: string;
+
+  @Field({ nullable: false })
+  lastname: string;
+}
+
+@InputType()
+export class AuthorInputPatch implements Partial<AuthorInput> {
   @Field({ nullable: true })
-  firstName?: string;
+  firstname?: string;
 
   @Field({ nullable: true })
-  lastName?: string;
+  lastname?: string;
+}
+
+@ObjectType()
+export class DeleteAuthor {
+  @Field(() => Int)
+  status: number;
+
+  @Field({ nullable: true })
+  detail?: string;
 }

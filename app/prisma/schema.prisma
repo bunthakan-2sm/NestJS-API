@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma-nestjs"
+  output   = "../prisma/generated/type-graphql"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model mydb {
+  id        String  @id @db.VarChar(255)
+  firstname String? @db.VarChar(255)
+  lastname  String? @db.VarChar(255)
+}

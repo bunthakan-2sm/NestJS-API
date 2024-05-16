@@ -1,26 +1,35 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Author, AuthorInput } from './author.model';
-import { authorData } from './data';
-
-@Resolver((of) => Author)
+import {
+  Author,
+  AuthorInput,
+  AuthorInputPatch,
+  DeleteAuthor,
+} from './author.model';
+import { AuthorService } from './author.services';
+import { Mydb } from 'prisma/generated/type-graphql';
+@Resolver(() => Author)
 export class AuthorResolver {
-  @Query((returns) => [Author])
-  getAuthors() {
-    return authorData;
+  constructor(private readonly authorService: AuthorService) {}
+  @Query(() => [Mydb])
+  async getAuthors() {
+    return await this.authorService.getAllAuthors();
   }
 
-  @Mutation((returns) => [Author])
-  addAuthor(@Args('authorPayload') authorPayload: AuthorInput) {
-    const newAuthorData = {
-      id: authorData.length + 1,
-      ...authorPayload,
-    };
-    authorData.push(newAuthorData);
-    return authorData;
+  @Mutation(() => Mydb)
+  async addAuthor(@Args('authorPayload') authorPayload: AuthorInput) {
+    return await this.authorService.postAuthor(authorPayload);
   }
 
-  @Query((returns) => Author)
-  getAuthorById(@Args('id') id: number) {
-    return authorData.find((author) => author.id === id);
+  @Mutation(() => Author)
+  patchAuthor(
+    @Args('authorPayload') authorPayload: AuthorInputPatch,
+    @Args('id') id: string,
+  ) {
+    return this.authorService.patchAuthor(authorPayload, id);
+  }
+
+  @Mutation(() => DeleteAuthor)
+  async deleteAuthor(@Args('id') id: string) {
+    return await this.authorService.DeleteAuthor(id);
   }
 }
