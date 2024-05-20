@@ -6,6 +6,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { PrismaService } from 'prisma/prisma.service';
 import { ConfigService } from '@nestjs/config';
+import { MyUserModule } from './my_user/my_user.module';
+import { AuthModule } from './auth/auth.module';
 
 const prisma = new PrismaService(new ConfigService());
 
@@ -18,6 +20,8 @@ const prisma = new PrismaService(new ConfigService());
       autoSchemaFile: true,
       context: ({ req, errorName }) => ({ req, prisma, errorName }),
     }),
+    MyUserModule,
+    AuthModule,
   ],
   // controllers: [AppController],
   // providers: [AppService],

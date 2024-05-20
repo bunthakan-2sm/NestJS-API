@@ -9,6 +9,7 @@ import * as inputTypes from './resolvers/inputs';
 
 const crudResolversMap = {
   Mydb: crudResolvers.MydbCrudResolver,
+  Myuser: crudResolvers.MyuserCrudResolver,
 };
 const actionResolversMap = {
   Mydb: {
@@ -24,6 +25,20 @@ const actionResolversMap = {
     updateManyMydb: actionResolvers.UpdateManyMydbResolver,
     updateOneMydb: actionResolvers.UpdateOneMydbResolver,
     upsertOneMydb: actionResolvers.UpsertOneMydbResolver,
+  },
+  Myuser: {
+    aggregateMyuser: actionResolvers.AggregateMyuserResolver,
+    createManyMyuser: actionResolvers.CreateManyMyuserResolver,
+    createOneMyuser: actionResolvers.CreateOneMyuserResolver,
+    deleteManyMyuser: actionResolvers.DeleteManyMyuserResolver,
+    deleteOneMyuser: actionResolvers.DeleteOneMyuserResolver,
+    findFirstMyuser: actionResolvers.FindFirstMyuserResolver,
+    myusers: actionResolvers.FindManyMyuserResolver,
+    myuser: actionResolvers.FindUniqueMyuserResolver,
+    groupByMyuser: actionResolvers.GroupByMyuserResolver,
+    updateManyMyuser: actionResolvers.UpdateManyMyuserResolver,
+    updateOneMyuser: actionResolvers.UpdateOneMyuserResolver,
+    upsertOneMyuser: actionResolvers.UpsertOneMyuserResolver,
   },
 };
 const crudResolversInfo = {
@@ -41,6 +56,20 @@ const crudResolversInfo = {
     'updateOneMydb',
     'upsertOneMydb',
   ],
+  Myuser: [
+    'aggregateMyuser',
+    'createManyMyuser',
+    'createOneMyuser',
+    'deleteManyMyuser',
+    'deleteOneMyuser',
+    'findFirstMyuser',
+    'myusers',
+    'myuser',
+    'groupByMyuser',
+    'updateManyMyuser',
+    'updateOneMyuser',
+    'upsertOneMyuser',
+  ],
 };
 const argsInfo = {
   AggregateMydbArgs: ['where', 'orderBy', 'cursor', 'take', 'skip'],
@@ -55,6 +84,32 @@ const argsInfo = {
   UpdateManyMydbArgs: ['data', 'where'],
   UpdateOneMydbArgs: ['data', 'where'],
   UpsertOneMydbArgs: ['where', 'create', 'update'],
+  AggregateMyuserArgs: ['where', 'orderBy', 'cursor', 'take', 'skip'],
+  CreateManyMyuserArgs: ['data', 'skipDuplicates'],
+  CreateOneMyuserArgs: ['data'],
+  DeleteManyMyuserArgs: ['where'],
+  DeleteOneMyuserArgs: ['where'],
+  FindFirstMyuserArgs: [
+    'where',
+    'orderBy',
+    'cursor',
+    'take',
+    'skip',
+    'distinct',
+  ],
+  FindManyMyuserArgs: [
+    'where',
+    'orderBy',
+    'cursor',
+    'take',
+    'skip',
+    'distinct',
+  ],
+  FindUniqueMyuserArgs: ['where'],
+  GroupByMyuserArgs: ['where', 'orderBy', 'by', 'having', 'take', 'skip'],
+  UpdateManyMyuserArgs: ['data', 'where'],
+  UpdateOneMyuserArgs: ['data', 'where'],
+  UpsertOneMyuserArgs: ['where', 'create', 'update'],
 };
 
 type ResolverModelNames = keyof typeof crudResolversMap;
@@ -204,6 +259,7 @@ function applyTypeClassEnhanceConfig<
 
 const modelsInfo = {
   Mydb: ['id', 'firstname', 'lastname'],
+  Myuser: ['id', 'email', 'password', 'first_name', 'last_name'],
 };
 
 type ModelNames = keyof typeof models;
@@ -244,10 +300,31 @@ export function applyModelsEnhanceMap(modelsEnhanceMap: ModelsEnhanceMap) {
 const outputsInfo = {
   AggregateMydb: ['_count', '_min', '_max'],
   MydbGroupBy: ['id', 'firstname', 'lastname', '_count', '_min', '_max'],
+  AggregateMyuser: ['_count', '_min', '_max'],
+  MyuserGroupBy: [
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+    '_count',
+    '_min',
+    '_max',
+  ],
   AffectedRowsOutput: ['count'],
   MydbCountAggregate: ['id', 'firstname', 'lastname', '_all'],
   MydbMinAggregate: ['id', 'firstname', 'lastname'],
   MydbMaxAggregate: ['id', 'firstname', 'lastname'],
+  MyuserCountAggregate: [
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+    '_all',
+  ],
+  MyuserMinAggregate: ['id', 'email', 'password', 'first_name', 'last_name'],
+  MyuserMaxAggregate: ['id', 'email', 'password', 'first_name', 'last_name'],
 };
 
 type OutputTypesNames = keyof typeof outputTypes;
@@ -308,10 +385,58 @@ const inputsInfo = {
     'firstname',
     'lastname',
   ],
+  MyuserWhereInput: [
+    'AND',
+    'OR',
+    'NOT',
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+  ],
+  MyuserOrderByWithRelationInput: [
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+  ],
+  MyuserWhereUniqueInput: ['id'],
+  MyuserOrderByWithAggregationInput: [
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+    '_count',
+    '_max',
+    '_min',
+  ],
+  MyuserScalarWhereWithAggregatesInput: [
+    'AND',
+    'OR',
+    'NOT',
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+  ],
   MydbCreateInput: ['id', 'firstname', 'lastname'],
   MydbUpdateInput: ['id', 'firstname', 'lastname'],
   MydbCreateManyInput: ['id', 'firstname', 'lastname'],
   MydbUpdateManyMutationInput: ['id', 'firstname', 'lastname'],
+  MyuserCreateInput: ['id', 'email', 'password', 'first_name', 'last_name'],
+  MyuserUpdateInput: ['id', 'email', 'password', 'first_name', 'last_name'],
+  MyuserCreateManyInput: ['id', 'email', 'password', 'first_name', 'last_name'],
+  MyuserUpdateManyMutationInput: [
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+  ],
   StringFilter: [
     'equals',
     'in',
@@ -372,6 +497,27 @@ const inputsInfo = {
     '_count',
     '_min',
     '_max',
+  ],
+  MyuserCountOrderByAggregateInput: [
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+  ],
+  MyuserMaxOrderByAggregateInput: [
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
+  ],
+  MyuserMinOrderByAggregateInput: [
+    'id',
+    'email',
+    'password',
+    'first_name',
+    'last_name',
   ],
   StringFieldUpdateOperationsInput: ['set'],
   NullableStringFieldUpdateOperationsInput: ['set'],

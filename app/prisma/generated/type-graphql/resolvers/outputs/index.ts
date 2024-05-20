@@ -1,6 +1,11 @@
 export { AffectedRowsOutput } from './AffectedRowsOutput';
 export { AggregateMydb } from './AggregateMydb';
+export { AggregateMyuser } from './AggregateMyuser';
 export { MydbCountAggregate } from './MydbCountAggregate';
 export { MydbGroupBy } from './MydbGroupBy';
 export { MydbMaxAggregate } from './MydbMaxAggregate';
 export { MydbMinAggregate } from './MydbMinAggregate';
+export { MyuserCountAggregate } from './MyuserCountAggregate';
+export { MyuserGroupBy } from './MyuserGroupBy';
+export { MyuserMaxAggregate } from './MyuserMaxAggregate';
+export { MyuserMinAggregate } from './MyuserMinAggregate';
