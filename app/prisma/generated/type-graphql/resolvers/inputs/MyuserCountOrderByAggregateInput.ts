@@ -32,4 +32,9 @@ export class MyuserCountOrderByAggregateInput {
     nullable: true
   })
   last_name?: "asc" | "desc" | undefined;
+
+  @Field(_type => SortOrder, {
+    nullable: true
+  })
+  refresh_token?: "asc" | "desc" | undefined;
 }

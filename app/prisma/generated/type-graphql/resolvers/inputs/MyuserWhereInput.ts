@@ -48,4 +48,9 @@ export class MyuserWhereInput {
     nullable: true
   })
   last_name?: StringNullableFilter | undefined;
+
+  @Field(_type => StringNullableFilter, {
+    nullable: true
+  })
+  refresh_token?: StringNullableFilter | undefined;
 }

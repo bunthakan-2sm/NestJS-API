@@ -19,9 +19,10 @@ model mydb {
 }
 
 model myuser {
-  id         String  @id @db.VarChar(255)
-  email      String? @db.VarChar(255)
-  password   String? @db.VarChar(255)
-  first_name String? @db.VarChar(255)
-  last_name  String? @db.VarChar(255)
+  id            String  @id @db.VarChar(255)
+  email         String? @db.VarChar(255)
+  password      String? @db.VarChar(255)
+  first_name    String? @db.VarChar(255)
+  last_name     String? @db.VarChar(255)
+  refresh_token String? @db.VarChar(255)
 }

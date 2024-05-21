@@ -5,7 +5,8 @@ export enum MyuserScalarFieldEnum {
   email = "email",
   password = "password",
   first_name = "first_name",
-  last_name = "last_name"
+  last_name = "last_name",
+  refresh_token = "refresh_token"
 }
 registerEnumType(MyuserScalarFieldEnum, {
   name: "MyuserScalarFieldEnum",

@@ -48,4 +48,9 @@ export class MyuserScalarWhereWithAggregatesInput {
     nullable: true
   })
   last_name?: StringNullableWithAggregatesFilter | undefined;
+
+  @Field(_type => StringNullableWithAggregatesFilter, {
+    nullable: true
+  })
+  refresh_token?: StringNullableWithAggregatesFilter | undefined;
 }

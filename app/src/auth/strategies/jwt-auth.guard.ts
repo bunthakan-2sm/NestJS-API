@@ -3,7 +3,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard } from '@nestjs/passport';
 
 @Injectable()
-export class LocalAuthGuard extends AuthGuard('local') {
+export class JwtAuthGuard extends AuthGuard('jwt') {
   constructor() {
     super();
   }
@@ -13,11 +13,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
     // transform the ExecutionContext from Graphql to one Nestjs/Passport can read
     // this.logger.debug(`context: ${context}`);
     const ctx = GqlExecutionContext.create(context);
-    const getCtx = ctx.getContext().req;
-    const { email, password } = ctx.getArgs();
-    getCtx.body.email = email;
-    getCtx.body.password = password;
-    return getCtx;
+    return ctx.getContext().req;
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {

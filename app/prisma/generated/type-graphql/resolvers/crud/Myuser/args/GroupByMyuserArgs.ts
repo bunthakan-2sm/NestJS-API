@@ -20,7 +20,7 @@ export class GroupByMyuserArgs {
   @Field(_type => [MyuserScalarFieldEnum], {
     nullable: false
   })
-  by!: Array<"id" | "email" | "password" | "first_name" | "last_name">;
+  by!: Array<"id" | "email" | "password" | "first_name" | "last_name" | "refresh_token">;
 
   @Field(_type => MyuserScalarWhereWithAggregatesInput, {
     nullable: true

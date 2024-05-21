@@ -31,4 +31,9 @@ export class Myuser {
     nullable: true
   })
   last_name?: string | null;
+
+  @Field(_type => String, {
+    nullable: true
+  })
+  refresh_token?: string | null;
 }

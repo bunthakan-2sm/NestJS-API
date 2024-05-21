@@ -31,4 +31,9 @@ export class MyuserCreateInput {
     nullable: true
   })
   last_name?: string | undefined;
+
+  @Field(_type => String, {
+    nullable: true
+  })
+  refresh_token?: string | undefined;
 }

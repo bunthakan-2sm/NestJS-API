@@ -198,7 +198,7 @@ function applyTypeClassEnhanceConfig<
 
 const modelsInfo = {
   Mydb: ["id", "firstname", "lastname"],
-  Myuser: ["id", "email", "password", "first_name", "last_name"]
+  Myuser: ["id", "email", "password", "first_name", "last_name", "refresh_token"]
 };
 
 type ModelNames = keyof typeof models;
@@ -240,14 +240,14 @@ const outputsInfo = {
   AggregateMydb: ["_count", "_min", "_max"],
   MydbGroupBy: ["id", "firstname", "lastname", "_count", "_min", "_max"],
   AggregateMyuser: ["_count", "_min", "_max"],
-  MyuserGroupBy: ["id", "email", "password", "first_name", "last_name", "_count", "_min", "_max"],
+  MyuserGroupBy: ["id", "email", "password", "first_name", "last_name", "refresh_token", "_count", "_min", "_max"],
   AffectedRowsOutput: ["count"],
   MydbCountAggregate: ["id", "firstname", "lastname", "_all"],
   MydbMinAggregate: ["id", "firstname", "lastname"],
   MydbMaxAggregate: ["id", "firstname", "lastname"],
-  MyuserCountAggregate: ["id", "email", "password", "first_name", "last_name", "_all"],
-  MyuserMinAggregate: ["id", "email", "password", "first_name", "last_name"],
-  MyuserMaxAggregate: ["id", "email", "password", "first_name", "last_name"]
+  MyuserCountAggregate: ["id", "email", "password", "first_name", "last_name", "refresh_token", "_all"],
+  MyuserMinAggregate: ["id", "email", "password", "first_name", "last_name", "refresh_token"],
+  MyuserMaxAggregate: ["id", "email", "password", "first_name", "last_name", "refresh_token"]
 };
 
 type OutputTypesNames = keyof typeof outputTypes;
@@ -293,19 +293,19 @@ const inputsInfo = {
   MydbWhereUniqueInput: ["id"],
   MydbOrderByWithAggregationInput: ["id", "firstname", "lastname", "_count", "_max", "_min"],
   MydbScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "firstname", "lastname"],
-  MyuserWhereInput: ["AND", "OR", "NOT", "id", "email", "password", "first_name", "last_name"],
-  MyuserOrderByWithRelationInput: ["id", "email", "password", "first_name", "last_name"],
+  MyuserWhereInput: ["AND", "OR", "NOT", "id", "email", "password", "first_name", "last_name", "refresh_token"],
+  MyuserOrderByWithRelationInput: ["id", "email", "password", "first_name", "last_name", "refresh_token"],
   MyuserWhereUniqueInput: ["id"],
-  MyuserOrderByWithAggregationInput: ["id", "email", "password", "first_name", "last_name", "_count", "_max", "_min"],
-  MyuserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "email", "password", "first_name", "last_name"],
+  MyuserOrderByWithAggregationInput: ["id", "email", "password", "first_name", "last_name", "refresh_token", "_count", "_max", "_min"],
+  MyuserScalarWhereWithAggregatesInput: ["AND", "OR", "NOT", "id", "email", "password", "first_name", "last_name", "refresh_token"],
   MydbCreateInput: ["id", "firstname", "lastname"],
   MydbUpdateInput: ["id", "firstname", "lastname"],
   MydbCreateManyInput: ["id", "firstname", "lastname"],
   MydbUpdateManyMutationInput: ["id", "firstname", "lastname"],
-  MyuserCreateInput: ["id", "email", "password", "first_name", "last_name"],
-  MyuserUpdateInput: ["id", "email", "password", "first_name", "last_name"],
-  MyuserCreateManyInput: ["id", "email", "password", "first_name", "last_name"],
-  MyuserUpdateManyMutationInput: ["id", "email", "password", "first_name", "last_name"],
+  MyuserCreateInput: ["id", "email", "password", "first_name", "last_name", "refresh_token"],
+  MyuserUpdateInput: ["id", "email", "password", "first_name", "last_name", "refresh_token"],
+  MyuserCreateManyInput: ["id", "email", "password", "first_name", "last_name", "refresh_token"],
+  MyuserUpdateManyMutationInput: ["id", "email", "password", "first_name", "last_name", "refresh_token"],
   StringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   StringNullableFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],
   MydbCountOrderByAggregateInput: ["id", "firstname", "lastname"],
@@ -313,9 +313,9 @@ const inputsInfo = {
   MydbMinOrderByAggregateInput: ["id", "firstname", "lastname"],
   StringWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "_count", "_min", "_max"],
   StringNullableWithAggregatesFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not", "_count", "_min", "_max"],
-  MyuserCountOrderByAggregateInput: ["id", "email", "password", "first_name", "last_name"],
-  MyuserMaxOrderByAggregateInput: ["id", "email", "password", "first_name", "last_name"],
-  MyuserMinOrderByAggregateInput: ["id", "email", "password", "first_name", "last_name"],
+  MyuserCountOrderByAggregateInput: ["id", "email", "password", "first_name", "last_name", "refresh_token"],
+  MyuserMaxOrderByAggregateInput: ["id", "email", "password", "first_name", "last_name", "refresh_token"],
+  MyuserMinOrderByAggregateInput: ["id", "email", "password", "first_name", "last_name", "refresh_token"],
   StringFieldUpdateOperationsInput: ["set"],
   NullableStringFieldUpdateOperationsInput: ["set"],
   NestedStringFilter: ["equals", "in", "notIn", "lt", "lte", "gt", "gte", "contains", "startsWith", "endsWith", "not"],

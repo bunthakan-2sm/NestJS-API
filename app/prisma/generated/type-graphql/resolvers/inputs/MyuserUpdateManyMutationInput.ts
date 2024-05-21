@@ -33,4 +33,9 @@ export class MyuserUpdateManyMutationInput {
     nullable: true
   })
   last_name?: NullableStringFieldUpdateOperationsInput | undefined;
+
+  @Field(_type => NullableStringFieldUpdateOperationsInput, {
+    nullable: true
+  })
+  refresh_token?: NullableStringFieldUpdateOperationsInput | undefined;
 }

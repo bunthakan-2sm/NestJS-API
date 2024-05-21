@@ -35,5 +35,10 @@ export class MyuserCountAggregate {
   @Field(_type => Int, {
     nullable: false
   })
+  refresh_token!: number;
+
+  @Field(_type => Int, {
+    nullable: false
+  })
   _all!: number;
 }

@@ -35,6 +35,11 @@ export class MyuserGroupBy {
   })
   last_name!: string | null;
 
+  @Field(_type => String, {
+    nullable: true
+  })
+  refresh_token!: string | null;
+
   @Field(_type => MyuserCountAggregate, {
     nullable: true
   })

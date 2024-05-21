@@ -35,5 +35,5 @@ export class FindFirstMyuserArgs {
   @Field(_type => [MyuserScalarFieldEnum], {
     nullable: true
   })
-  distinct?: Array<"id" | "email" | "password" | "first_name" | "last_name"> | undefined;
+  distinct?: Array<"id" | "email" | "password" | "first_name" | "last_name" | "refresh_token"> | undefined;
 }
