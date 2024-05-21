@@ -1,24 +1,41 @@
-import { Args, ArgsType, Context, Field, Float, ID, Info, InputType, Int, Mutation, ObjectType, Query, ResolveField, Resolver, Root, registerEnumType } from "@nestjs/graphql";
-import * as GraphQLScalars from "graphql-scalars";
-import { Prisma } from "@prisma/client";
-import { DecimalJSScalar } from "../../scalars";
+import {
+  Args,
+  ArgsType,
+  Context,
+  Field,
+  Float,
+  ID,
+  Info,
+  InputType,
+  Int,
+  Mutation,
+  ObjectType,
+  Query,
+  ResolveField,
+  Resolver,
+  Root,
+  registerEnumType,
+} from '@nestjs/graphql';
+import * as GraphQLScalars from 'graphql-scalars';
+import { Prisma } from '@prisma/client';
+import { DecimalJSScalar } from '../../scalars';
 
-@ObjectType("MydbMaxAggregate", {
-  isAbstract: true
+@ObjectType('MydbMaxAggregate', {
+  isAbstract: true,
 })
 export class MydbMaxAggregate {
-  @Field(_type => String, {
-    nullable: true
+  @Field((_type) => String, {
+    nullable: true,
   })
   id!: string | null;
 
-  @Field(_type => String, {
-    nullable: true
+  @Field((_type) => String, {
+    nullable: true,
   })
   firstname!: string | null;
 
-  @Field(_type => String, {
-    nullable: true
+  @Field((_type) => String, {
+    nullable: true,
   })
   lastname!: string | null;
 }

@@ -35,7 +35,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Resolver(() => Myuser)
 export class MyuserCrudResolver {
-
   @Query(() => AggregateMyuser, {
     nullable: false,
   })
