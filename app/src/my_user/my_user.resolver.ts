@@ -12,7 +12,7 @@ export class MyUserResolver {
     private userServices: MyUserService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Query(() => Myuser)
   async getUserByMail(@Args('email') email: string) {
     return this.userServices.findOne(email);

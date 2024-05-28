@@ -18,4 +18,17 @@ export class AuthResolver {
       return await this.authService.getMe(email);
     }
   }
+
+  // @UseGuards(GoogleOAuthGuard)
+  // @Query(() => String)
+  // async googleAuth(@Context() context: any) {
+  //   const req = GqlExecutionContext.create(context).getContext().req;
+  // }
+
+  // @UseGuards(GoogleOAuthGuard)
+  // @Mutation(() => String)
+  // async googleRelogin(@Context() context: any) {
+  //   const req = GqlExecutionContext.create(context).getContext().req;
+  //   return this.authService.googleLogin(req);
+  // }
 }

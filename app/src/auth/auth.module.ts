@@ -8,12 +8,14 @@ import { PrismaModule } from 'prisma/prisma.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     MyUserModule,
     PassportModule,
     PrismaModule,
+    ConfigModule.forRoot(),
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '2d' },

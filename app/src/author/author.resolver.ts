@@ -12,6 +12,7 @@ export class AuthorResolver {
   constructor(private readonly authorService: AuthorService) {}
   @Query(() => [Mydb])
   async getAuthors() {
+    console.log('getAuthors');
     return await this.authorService.getAllAuthors();
   }
 

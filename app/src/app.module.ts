@@ -8,6 +8,7 @@ import { MyUserModule } from './my_user/my_user.module';
 import { AuthModule } from './auth/auth.module';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
+import { GoogleModule } from './auth/google/google.module';
 
 const prisma = new PrismaService(new ConfigService());
 
@@ -22,6 +23,7 @@ const prisma = new PrismaService(new ConfigService());
     }),
     MyUserModule,
     AuthModule,
+    GoogleModule,
   ],
   providers: [AppResolver, AppService],
 })
