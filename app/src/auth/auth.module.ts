@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
+import { FBModule } from './fb/fb.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '2d' },
     }),
+    FBModule,
   ],
   providers: [AuthResolver, AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],

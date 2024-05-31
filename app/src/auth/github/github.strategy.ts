@@ -1,19 +1,25 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, Profile } from 'passport-github';
-import { GithubService } from './github.services';
+import { Strategy } from 'passport-github';
 
 @Injectable()
 export class GitHubStrategy extends PassportStrategy(Strategy, 'github') {
-  constructor(private readonly githubService: GithubService) {
+  constructor() {
     super({
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_SECRET_ID,
       callbackURL: 'http://localhost:8080/github-auth/callback',
-      scope: ['public_profile'],
+      scope: ['user', 'read:user', 'public_repo'],
+      passReqToCallback: true,
     });
   }
-  async validate(accessToken: string, _refreshToken: string, profile: Profile) {
+  async validate(
+    request: any,
+    accessToken: string,
+    refreshToken: string,
+    profile: any,
+    done: any,
+  ) {
     // For each strategy, Passport will call the verify function (implemented with this
     // `validate()` method in @nestjs/passport) using an appropriate strategy-specific set of
     // parameters. For the passport-github strategy Passport expects a `validate()` method with
@@ -27,13 +33,21 @@ export class GitHubStrategy extends PassportStrategy(Strategy, 'github') {
     // (e.g., creating the user property on the Request object), and the request
     // handling pipeline can continue.
 
-    const { id } = profile;
-    const user = await this.githubService.githubLogin(id);
-    if (!user) {
-      // TODO Depending on the concrete implementation of findOrCreate(), throwing the
-      // UnauthorizedException here might not make sense...
-      throw new UnauthorizedException();
-    }
-    return user;
+    const user = {
+      id: profile.id,
+      name: profile.displayName ? profile.displayName : profile.username,
+      email: profile.emails ? profile.emails[0].value : null,
+      photos: profile.photos ? profile.photos[0].value : null,
+      accessToken,
+      refreshToken,
+      provider: profile.provider,
+      // You can extract other relevant information from the `profile` object as needed
+    };
+    // console.log("================================================")
+    console.log(profile);
+
+    // You can also pass additional information as the second argument to the `done` function
+    // E.g., done(null, user, { message: 'Login successful' });
+    done(null, user);
   }
 }

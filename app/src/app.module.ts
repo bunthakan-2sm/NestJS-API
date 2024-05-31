@@ -10,6 +10,7 @@ import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { GoogleModule } from './auth/google/google.module';
 import { GitHubModule } from './auth/github/github.module';
+import { FBModule } from './auth/fb/fb.module';
 
 const prisma = new PrismaService(new ConfigService());
 
@@ -26,6 +27,7 @@ const prisma = new PrismaService(new ConfigService());
     AuthModule,
     GoogleModule,
     GitHubModule,
+    FBModule,
   ],
   providers: [AppResolver, AppService],
 })

@@ -1,11 +1,10 @@
 import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
-import { GithubService } from './github.services';
 import { Request, Response } from 'express';
 import { GithubAuthGuard } from './github.guard';
 
 @Controller('github-auth')
 export class GitHubController {
-  constructor(private readonly githubService: GithubService) {}
+  constructor() {}
 
   @Get()
   @UseGuards(GithubAuthGuard)
@@ -15,12 +14,17 @@ export class GitHubController {
 
   @Get('callback')
   @UseGuards(GithubAuthGuard)
-  async githubLoginCallback(
-    @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const { access_token } = this.githubService.githubLogin(req.user);
-    res.cookie('jwt', access_token);
-    return { access_token: access_token };
+  async githubLoginCallback(@Req() req: Request, @Res() res: Response) {
+    res.redirect('http://localhost:8080/graphql');
+  }
+
+  @Get('logout')
+  logout(@Req() req, @Res() res) {
+    // Clear the local session or token in your application
+    // req.logout();
+
+    // Redirect to the social login provider's logout page
+    const socialProviderLogoutURL = 'https://github.com/logout'; // Replace with the logout URL of your social login provider
+    return res.redirect(socialProviderLogoutURL);
   }
 }

@@ -22,7 +22,7 @@ export class GoogleController {
   @UseGuards(AuthGuard('google'))
   async googleLoginCallback(@Req() req, @Res() res) {
     // console.log(res);
-    res.redirect('http://localhost:53086/');
+    res.redirect('http://localhost:8080/graphql');
   }
 
   @Get('logout')
